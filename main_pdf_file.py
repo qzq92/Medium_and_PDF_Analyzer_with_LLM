@@ -12,6 +12,9 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_community.vectorstores import FAISS
 from textwrap import dedent
 
+
+DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
+
 def format_docs(docs) -> str:
     """Formatter function that joins documents into single string delimited by 2 newlines.
 
@@ -44,7 +47,7 @@ if __name__ == "__main__":
     
     embeddings = HuggingFaceEmbeddings(
         model_name=embedding_model_id, # Provide the pre-trained model's path
-        model_kwargs={"device":"cpu"}, # Pass the model configuration options
+        model_kwargs={"device":DEVICE}, # Pass the model configuration options
         encode_kwargs = {'normalize_embeddings': False}
     )
     
